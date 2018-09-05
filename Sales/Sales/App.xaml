@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <!--Locator-->
             <infra:InstanceLocator x:Key="Locator"/>
+            <!--Url api-->
+            <x:String x:Key="UrlApi">https://salesapiservices.azurewebsites.net</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
