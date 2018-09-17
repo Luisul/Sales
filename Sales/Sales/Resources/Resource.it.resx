@@ -148,8 +148,7 @@
     <value>Inserisci il Prezzo del prodotto.</value>
   </data>
   <data name="Remarks" xml:space="preserve">
-    <value>
-Note:
+    <value>Note:
 
 </value>
   </data>
@@ -158,5 +157,11 @@ Note:
   </data>
   <data name="ChangeImage" xml:space="preserve">
     <value>Tocca l&amp;#39;immagine per cambiare!</value>
+  </data>
+  <data name="DescriptionError" xml:space="preserve">
+    <value>Immettere una descrizione</value>
+  </data>
+  <data name="PriceError" xml:space="preserve">
+    <value>Devi inserire un prezzo maggiore di zero!</value>
   </data>
 </root>

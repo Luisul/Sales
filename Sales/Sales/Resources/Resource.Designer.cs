@@ -97,6 +97,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You must enter a description.
+        /// </summary>
+        public static string DescriptionError {
+            get {
+                return ResourceManager.GetString("DescriptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Enter product description...
         /// </summary>
         public static string DescriptionPlaceholder {
@@ -129,6 +138,15 @@ namespace Sales.Resources {
         public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You must enter a price greater than zero.
+        /// </summary>
+        public static string PriceError {
+            get {
+                return ResourceManager.GetString("PriceError", resourceCulture);
             }
         }
         
