@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Product
     {
@@ -27,6 +28,9 @@
         [DataType(DataType.Date)]
         [Display(Name = "Publish On")]
         public DateTime PublishOn { get; set; }
+
+        [NotMapped]
+        public byte[] ImageArray { get; set; }
 
         public string ImageFullPath
         {
