@@ -112,7 +112,7 @@
 
 
             var productsViewModel = ProductsViewModel.GetInstance();
-            var deleteProduct = productsViewModel.Products.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
+            var deleteProduct = productsViewModel.Products.Where(p => p.ProductId == this.Product.ProductId).FirstOrDefault();
             if (deleteProduct != null)
             {
                 productsViewModel.MyProducts.Remove(deleteProduct);
