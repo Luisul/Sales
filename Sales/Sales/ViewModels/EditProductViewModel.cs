@@ -9,6 +9,7 @@
     using Plugin.Media;
     using Sales.Helpers;
     using System.Linq;
+    using System;
 
     public class EditProductViewModel : BaseViewModel
     {
@@ -63,6 +64,66 @@
         #endregion
 
         #region Commands
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new RelayCommand(Delete);
+            }
+
+        }
+
+        private async void Delete()
+        {
+            var answer = await Application.Current.MainPage.DisplayAlert(
+                  Languages.Confirm,
+                  Languages.DeleteConfirmation,
+                  Languages.Yes,
+                  Languages.No);
+
+            if (!answer)
+            {
+                return;
+            }
+
+            this.IsRunning = true;
+            this.isEnabled = false; 
+
+            var conecction = await this.apiService.CheckConecction();
+            if (!conecction.IsSucces)
+            {
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, conecction.Message, Languages.Accept);
+                return;
+            }
+
+            var url = Application.Current.Resources["UrlApi"].ToString();
+            var urlPrefix = Application.Current.Resources["UrlPrefix"].ToString();
+            var urlController = Application.Current.Resources["UrlProductsController"].ToString();
+
+            var response = await this.apiService.Delete(url, urlPrefix, urlController, this.Product.ProductId);
+            if (!response.IsSucces)
+            {
+                this.IsRunning = false;
+                this.isEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Error);
+                return;
+            }
+
+
+            var productsViewModel = ProductsViewModel.GetInstance();
+            var deleteProduct = productsViewModel.Products.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
+            if (deleteProduct != null)
+            {
+                productsViewModel.MyProducts.Remove(deleteProduct);
+            }
+
+            productsViewModel.RefresList();
+            this.IsRunning = false;
+            this.isEnabled = true;
+
+            await Application.Current.MainPage.Navigation.PopAsync();
+        }
 
         public ICommand ChangeImageCommand
         {
@@ -165,6 +226,7 @@
             if (this.file != null)
             {
                 imageArray = FileHelper.ReadFully(this.file.GetStream());
+                this.Product.ImageArray = imageArray;
             }
 
 

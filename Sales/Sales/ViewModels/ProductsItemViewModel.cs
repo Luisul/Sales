@@ -80,12 +80,12 @@
 
             var productsViewModel = ProductsViewModel.GetInstance();
             var deleteProduct = productsViewModel.Products.Where(p => p.ProductId == this.ProductId).FirstOrDefault();
-
             if (deleteProduct != null)
             {
-                productsViewModel.Products.Remove(deleteProduct);
+                productsViewModel.MyProducts.Remove(deleteProduct);
             }
 
+            productsViewModel.RefresList();
         }
         #endregion
     }

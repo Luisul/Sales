@@ -81,22 +81,36 @@
                         Grid.Row="3"
                         HorizontalOptions="End"
                         IsToggled="{Binding Product.IsAvailable}">
-                        
+
                     </Switch>
                 </Grid>
                 <ActivityIndicator
                     IsRunning="{Binding IsRunning}"
                     VerticalOptions="CenterAndExpand">
                 </ActivityIndicator>
-                <Button
+                <StackLayout
+                    Orientation="Horizontal">
+                    <Button
                     BackgroundColor="Navy"
                     BorderRadius="23"
                     Command="{Binding SaveCommand}"
                     HeightRequest="46"
+                    HorizontalOptions="FillAndExpand"
                     IsEnabled="{Binding IsEnabled}"
                     Text="{i18n:Translate Save}"
                     TextColor="White">
-                </Button>
+                    </Button>
+                    <Button
+                    BackgroundColor="Red"
+                    BorderRadius="23"
+                    Command="{Binding DeleteCommand}"
+                    HeightRequest="46"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="{Binding IsEnabled}"
+                    Text="{i18n:Translate Delete}"
+                    TextColor="White">
+                    </Button>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
