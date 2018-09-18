@@ -205,8 +205,10 @@
             }
 
             var newProduct = (Product)response.Result;
-            var viewModel = ProductsViewModel.GetInstance();
-            viewModel.Products.Add(newProduct);
+            var productsViewModel  = ProductsViewModel.GetInstance();
+            productsViewModel.MyProducts.Add(newProduct);
+            productsViewModel.RefresList();
+
 
             this.IsRunning = false;
             this.IsEnabled = true;

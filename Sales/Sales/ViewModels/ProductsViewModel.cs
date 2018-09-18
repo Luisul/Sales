@@ -1,7 +1,9 @@
 ﻿namespace Sales.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using Common.Models;
     using GalaSoft.MvvmLight.Command;
@@ -15,12 +17,15 @@
         private ApiService apiService;
 
         private bool isRefreshing;
+
+        private ObservableCollection<ProductsItemViewModel> products;
         #endregion
 
-        #region Properties
-        private ObservableCollection<Product> products;
+        #region Properties    
 
-        public ObservableCollection<Product> Products
+        public List<Product> MyProducts { get; set; }
+
+        public ObservableCollection<ProductsItemViewModel> Products
         {
             get { return this.products; }
             set { this.SetValue(ref this.products, value); }
@@ -77,8 +82,28 @@
                 await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Error);
                 return;
             }
-            var list = (List<Product>)response.Result;
-            this.Products = new ObservableCollection<Product>(list);
+
+            this.MyProducts = (List<Product>)response.Result;
+            this.RefresList();
+            this.IsRefreshing = false;
+        }
+
+        public void RefresList()
+        {
+            var myListProductsItemViewModel = MyProducts.Select(p => new ProductsItemViewModel
+            {
+                Description = p.Description,
+                ImageArray = p.ImageArray,
+                ImagePath = p.ImagePath,
+                IsAvailable = p.IsAvailable,
+                Price = p.Price,
+                ProductId = p.ProductId,
+                PublishOn = p.PublishOn,
+                Remarks = p.Remarks
+            });
+
+            this.Products = new ObservableCollection<ProductsItemViewModel>(
+                myListProductsItemViewModel.OrderBy(p => p.Description));
             this.IsRefreshing = false;
         }
         #endregion
@@ -91,7 +116,7 @@
                 return new RelayCommand(LoadProducts);
             }
 
-        } 
+        }
         #endregion
     }
 }

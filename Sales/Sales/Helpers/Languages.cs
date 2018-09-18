@@ -11,7 +11,7 @@ namespace Sales.Helpers
         {
             var ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
             Resource.Culture = ci;
-            DependencyService.Get<ILocalize>().SetLocale(ci);   
+            DependencyService.Get<ILocalize>().SetLocale(ci);
         }
 
         public static string Accept
@@ -34,7 +34,7 @@ namespace Sales.Helpers
         {
             get { return Resource.TurnOnInternet; }
         }
-     
+
         public static string AddProduct
         {
             get { return Resource.AddProduct; }
@@ -97,6 +97,32 @@ namespace Sales.Helpers
         public static string Cancel
         {
             get { return Resource.Cancel; }
+        }
+
+        public static string Delete
+        {
+            get { return Resource.Delete; }
+        }
+        public static string Edit
+        {
+            get { return Resource.Edit; }
+        }
+        public static string DeleteConfirmation
+        {
+            get { return Resource.DeleteConfirmation; }
+        }
+        public static string Yes
+        {
+            get { return Resource.Yes; }
+        }
+        public static string No
+        {
+            get { return Resource.No; }
+        }
+
+        public static string Confirm
+        {
+            get { return Resource.Confirm; }
         }
 
     }
