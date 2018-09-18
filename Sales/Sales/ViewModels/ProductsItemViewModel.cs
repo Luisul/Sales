@@ -7,6 +7,7 @@
     using GalaSoft.MvvmLight.Command;
     using Sales.Helpers;
     using Sales.Services;
+    using Sales.Views;
     using Xamarin.Forms;
 
     public class ProductsItemViewModel : Product
@@ -23,6 +24,21 @@
         #endregion
 
         #region Command
+
+        public ICommand EditProductCommand
+        {
+            get
+            {
+                return new RelayCommand(EditProduct);
+            }
+        }
+
+        private async void EditProduct()
+        {
+            MainViewModel.GetInstance().EditProduct = new EditProductViewModel(this);
+            await Application.Current.MainPage.Navigation.PushAsync(new EditProductPage());
+        }
+
         public ICommand DeleteProductCommand
         {
             get
