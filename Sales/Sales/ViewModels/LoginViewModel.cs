@@ -3,12 +3,15 @@
     using System;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
-    using Sales.Helpers;
+    using Helpers;
+    using Services;
     using Xamarin.Forms;
 
     public class LoginViewModel : BaseViewModel
     {
         #region Attributes
+        private ApiService apiService;
+
         private bool isRunning;
 
         private bool isEnabled;
@@ -37,7 +40,9 @@
         #region Cosnstructors
         public LoginViewModel()
         {
+            this.apiService = new ApiService();
             this.IsEnabled = true;
+            this.IsRemembered = true;
         }
         #endregion
 
@@ -70,6 +75,31 @@
                     Languages.Accept);
                 return;
             }
+
+            this.IsRunning = true;
+            this.IsEnabled = false;
+
+            var conecction = await this.apiService.CheckConecction();
+            if (!conecction.IsSucces)
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, conecction.Message, Languages.Accept);
+                return;
+            }
+
+            var url = Application.Current.Resources["UrlApi"].ToString();
+            var token = await this.apiService.GetToken(url, this.Email, this.Password);
+
+            if (token == null || string.IsNullOrEmpty(token.AccessToken))
+            {
+                this.IsRunning = false;
+                this.IsEnabled = true;
+                await Application.Current.MainPage.DisplayAlert(Languages.Error, Languages.SomethingWrong, Languages.Accept);
+                return;
+            }
+
+
         }
         #endregion
     }
