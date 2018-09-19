@@ -2364,7 +2364,7 @@ namespace Sales.Droid
 			public const int ic_info = 2130837634;
 			
 			// aapt resource value: 0x7f020083
-			public const int ic_launcher1 = 2130837635;
+			public const int ic_launcher = 2130837635;
 			
 			// aapt resource value: 0x7f020084
 			public const int ic_media_pause_dark = 2130837636;
