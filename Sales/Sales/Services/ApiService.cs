@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
     using Common.Models;
@@ -61,13 +62,51 @@
             }
         }
 
-
         public async Task<Response> GetList<T>(string urlBase, string prefix, string controller)
         {
             try
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
+                var url = $"{prefix}{controller}";
+                var response = await client.GetAsync(url);
+                var answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSucces = false,
+                        Message = answer
+                    };
+                }
+
+
+                var list = JsonConvert.DeserializeObject<List<T>>(answer);
+                return new Response
+                {
+                    IsSucces = true,
+                    Result = list
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Response> GetList<T>(string urlBase, string prefix, string controller, string tokenType, string accesToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accesToken);
                 var url = $"{prefix}{controller}";
                 var response = await client.GetAsync(url);
                 var answer = await response.Content.ReadAsStringAsync();
@@ -140,12 +179,90 @@
             }
         }
 
+        public async Task<Response> Post<T>(string urlBase, string prefix, string controller, T model, string tokenType, string accesToken)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var client = new HttpClient();               
+                client.BaseAddress = new Uri(urlBase);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accesToken);
+                var url = $"{prefix}{controller}";
+                var response = await client.PostAsync(url, content);
+                var answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSucces = false,
+                        Message = answer
+                    };
+                }
+
+
+                var obj = JsonConvert.DeserializeObject<T>(answer);
+                return new Response
+                {
+                    IsSucces = true,
+                    Result = obj
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
         public async Task<Response> Delete(string urlBase, string prefix, string controller, int id)
         {
             try
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
+                var url = $"{prefix}{controller}/{id}";
+                var response = await client.DeleteAsync(url);
+                var answer = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSucces = false,
+                        Message = answer
+                    };
+                }
+
+                return new Response
+                {
+                    IsSucces = true,
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Response> Delete(string urlBase, string prefix, string controller, int id, string tokenType, string accesToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accesToken);
                 var url = $"{prefix}{controller}/{id}";
                 var response = await client.DeleteAsync(url);
                 var answer = await response.Content.ReadAsStringAsync();
@@ -184,6 +301,47 @@
                 var content = new StringContent(request, Encoding.UTF8, "application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
+                var url = $"{prefix}{controller}/{id}";
+                var response = await client.PutAsync(url, content);
+                var answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSucces = false,
+                        Message = answer
+                    };
+                }
+
+
+                var obj = JsonConvert.DeserializeObject<T>(answer);
+                return new Response
+                {
+                    IsSucces = true,
+                    Result = obj
+                };
+
+            }
+            catch (Exception ex)
+            {
+
+                return new Response
+                {
+                    IsSucces = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Response> Put<T>(string urlBase, string prefix, string controller, T model, int id, string tokenType, string accesToken)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var client = new HttpClient();                
+                client.BaseAddress = new Uri(urlBase);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accesToken);
                 var url = $"{prefix}{controller}/{id}";
                 var response = await client.PutAsync(url, content);
                 var answer = await response.Content.ReadAsStringAsync();

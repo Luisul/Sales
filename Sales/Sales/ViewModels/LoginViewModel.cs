@@ -4,6 +4,7 @@
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
     using Helpers;
+    using Sales.Views;
     using Services;
     using Xamarin.Forms;
 
@@ -99,7 +100,15 @@
                 return;
             }
 
+            Settings.TonkenType = token.TokenType;
+            Settings.AccesToken = token.AccessToken;
+            Settings.IsRemembered = this.IsRemembered;
 
+            MainViewModel.GetInstance().Products = new ProductsViewModel();
+            Application.Current.MainPage = new ProductsPage();
+
+            this.IsRunning = false;
+            this.IsEnabled = true;
         }
         #endregion
     }

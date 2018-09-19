@@ -101,7 +101,7 @@
             var urlPrefix = Application.Current.Resources["UrlPrefix"].ToString();
             var urlController = Application.Current.Resources["UrlProductsController"].ToString();
 
-            var response = await this.apiService.Delete(url, urlPrefix, urlController, this.Product.ProductId);
+            var response = await this.apiService.Delete(url, urlPrefix, urlController, this.Product.ProductId, Settings.TonkenType, Settings.AccesToken);
             if (!response.IsSucces)
             {
                 this.IsRunning = false;
