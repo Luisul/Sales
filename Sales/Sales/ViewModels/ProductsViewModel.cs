@@ -14,6 +14,8 @@
     public class ProductsViewModel : BaseViewModel
     {
         #region Attributes
+        private string filter;
+
         private ApiService apiService;
 
         private bool isRefreshing;
@@ -25,7 +27,15 @@
 
         public List<Product> MyProducts { get; set; }
 
-        public string Filter { get; set; }
+        public string Filter
+        {
+            get { return this.filter; }
+            set
+            {
+                this.filter = value;
+                this.RefresList();
+            }
+        }
 
         public ObservableCollection<ProductsItemViewModel> Products
         {
@@ -130,29 +140,30 @@
                 this.IsRefreshing = false;
             }
         }
-    }
 
 
-    #endregion
 
-    #region Commands
-    public ICommand SearchCommand
-    {
-        get
+        #endregion
+
+        #region Commands
+        public ICommand SearchCommand
         {
-            return new RelayCommand(RefresList);
+            get
+            {
+                return new RelayCommand(RefresList);
+            }
+
         }
 
-    }
-
-    public ICommand RefreshCommand
-    {
-        get
+        public ICommand RefreshCommand
         {
-            return new RelayCommand(LoadProducts);
-        }
+            get
+            {
+                return new RelayCommand(LoadProducts);
+            }
 
+        }
+        #endregion
     }
-    #endregion
 }
-}
+
