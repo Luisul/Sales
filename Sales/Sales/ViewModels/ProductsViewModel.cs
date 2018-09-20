@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Common.Models;
     using GalaSoft.MvvmLight.Command;
@@ -17,6 +18,8 @@
         private string filter;
 
         private ApiService apiService;
+
+        private DataService dataService;
 
         private bool isRefreshing;
 
@@ -55,6 +58,7 @@
         {
             instance = this;
             this.apiService = new ApiService();
+            this.dataService = new DataService();
             this.LoadProducts();
         }
         #endregion
@@ -79,10 +83,42 @@
             var conecction = await this.apiService.CheckConecction();
             if (!conecction.IsSucces)
             {
+                var answer = await this.LoadProductsFromApi();
+                if (answer)
+                {
+                    this.SaveProductsToDB();
+                }
+            }
+            else
+            {
+                await this.LoadProductsFromDB();
+            }
+
+            if (this.MyProducts == null || this.MyProducts.Count.Equals(0))
+            {
                 this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert(Languages.Error, conecction.Message, Languages.Accept);
+                await Application.Current.MainPage.DisplayAlert(
+                    Languages.Error, Languages.NoProductsMessage, Languages.Accept);
                 return;
             }
+
+            this.RefresList();
+            this.IsRefreshing = false;
+        }
+
+        private async Task LoadProductsFromDB()
+        {
+            this.MyProducts = await this.dataService.GetAllProducts();
+        }
+
+        private async Task  SaveProductsToDB()
+        {
+            await dataService.DeleteAllProducts();
+            dataService.Insert(this.MyProducts);
+        }
+
+        private async Task<bool> LoadProductsFromApi()
+        {
             var url = Application.Current.Resources["UrlApi"].ToString();
             var urlPrefix = Application.Current.Resources["UrlPrefix"].ToString();
             var urlController = Application.Current.Resources["UrlProductsController"].ToString();
@@ -90,14 +126,11 @@
             var response = await this.apiService.GetList<Product>(url, urlPrefix, urlController, Settings.TonkenType, Settings.AccesToken);
             if (!response.IsSucces)
             {
-                this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert(Languages.Error, response.Message, Languages.Error);
-                return;
+                return false;
             }
 
             this.MyProducts = (List<Product>)response.Result;
-            this.RefresList();
-            this.IsRefreshing = false;
+            return true;
         }
 
         public void RefresList()
