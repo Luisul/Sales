@@ -12,6 +12,8 @@
     public class MainViewModel
     {
         #region Properties
+        public RegisterViewModel Register { get; set; }
+
         public LoginViewModel Login { get; set; }
 
         public EditProductViewModel EditProduct { get; set; }

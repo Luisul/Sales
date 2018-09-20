@@ -78,11 +78,11 @@
         #region Methods
         private async void LoadProducts()
         {
-            this.IsRefreshing = true;
-
+            
             var conecction = await this.apiService.CheckConecction();
             if (!conecction.IsSucces)
             {
+                this.IsRefreshing = true;
                 var answer = await this.LoadProductsFromApi();
                 if (answer)
                 {

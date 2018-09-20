@@ -23,7 +23,11 @@ namespace Sales
             else
             {
                 MainViewModel.GetInstance().Login = new LoginViewModel();
-                MainPage = new NavigationPage(new LoginPage());
+                MainPage = new NavigationPage(new LoginPage())
+                {
+                    BarBackgroundColor = Color.White,
+                    BarTextColor = Color.Black
+                };
             }           
         }
 

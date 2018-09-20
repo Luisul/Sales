@@ -39,7 +39,11 @@ namespace Sales.ViewModels
                 Settings.IsRemembered = false;
 
                 MainViewModel.GetInstance().Login = new LoginViewModel();
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                Application.Current.MainPage = new NavigationPage(new LoginPage())
+                {
+                    BarBackgroundColor = Color.White,
+                    BarTextColor = Color.Black
+                }; ;
             }
         }
         #endregion

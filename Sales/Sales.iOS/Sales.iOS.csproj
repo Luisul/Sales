@@ -204,4 +204,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_launcher.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\nouser.png" />
+  </ItemGroup>
 </Project>
