@@ -80,7 +80,7 @@
         {
             
             var conecction = await this.apiService.CheckConecction();
-            if (!conecction.IsSucces)
+            if (conecction.IsSucces)
             {
                 this.IsRefreshing = true;
                 var answer = await this.LoadProductsFromApi();
