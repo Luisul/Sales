@@ -203,7 +203,7 @@
                 this.IsEnabled = true;
                 await Application.Current.MainPage.DisplayAlert(
                     Languages.Error,
-                    response.Message,
+                    Languages.ErrorRegisterUser,
                     Languages.Accept);
                 return;
             }

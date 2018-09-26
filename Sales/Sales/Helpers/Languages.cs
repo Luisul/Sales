@@ -310,5 +310,10 @@ namespace Sales.Helpers
             get { return Resource.RegisterConfirmation; }
         }
 
+        public static string ErrorRegisterUser
+        {
+            get { return Resource.ErrorRegisterUser; }
+        }
+
     }
 }

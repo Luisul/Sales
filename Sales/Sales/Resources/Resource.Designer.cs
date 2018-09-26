@@ -241,6 +241,15 @@ namespace Sales.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a User already exists!!.
+        /// </summary>
+        public static string ErrorRegisterUser {
+            get {
+                return ResourceManager.GetString("ErrorRegisterUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Close session.
         /// </summary>
         public static string Exit {

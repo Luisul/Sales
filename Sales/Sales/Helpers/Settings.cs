@@ -16,12 +16,23 @@
 
         private const string tonkenType = "TonkenType";
         private const string accesToken = "AccesToken";
+        private const string userAsp = "UserAsp";
         private const string isRemembered = "IsRemembered";
         private static readonly string strinDefault = string.Empty;
         private static readonly bool booleanDefault = false;
 
         #endregion
-
+        public static string UserAsp
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(userAsp, strinDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(userAsp, value);
+            }
+        }
 
         public static string TonkenType
         {

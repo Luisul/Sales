@@ -4,6 +4,7 @@
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.Command;
+    using Sales.Common.Models;
     using Sales.Helpers;
     using Sales.Views;
     using Xamarin.Forms;
@@ -11,7 +12,7 @@
 
     public class MainViewModel
     {
-        #region Properties
+        #region Properties      
         public RegisterViewModel Register { get; set; }
 
         public LoginViewModel Login { get; set; }
@@ -23,6 +24,21 @@
         public AddProductViewModel AddProduct { get; set; }
 
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
+
+        public MyUserASP UserAsp { get; set; }
+
+        public string UserFullName
+        {
+            get
+            {
+                if (this.UserAsp != null && this.UserAsp.Claims != null && this.UserAsp.Claims.Count > 1)
+                {
+                    return $"{this.UserAsp.Claims[0].ClaimValue} {this.UserAsp.Claims[1].ClaimValue}";
+                }
+
+                return null;
+            }
+        }
         #endregion
 
         #region Constructors

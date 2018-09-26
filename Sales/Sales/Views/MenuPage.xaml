@@ -20,8 +20,9 @@
                 TextColor="White">
             </Label>
             <ListView 
-                ItemsSource="{Binding Menu}"
-                HasUnevenRows="True">
+                ItemsSource="{Binding Menu}"                
+                HasUnevenRows="True"
+                SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

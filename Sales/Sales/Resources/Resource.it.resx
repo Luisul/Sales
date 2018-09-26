@@ -305,4 +305,7 @@
   <data name="RegisterConfirmation" xml:space="preserve">
     <value>L'utente è stato creato correttamente. Ora è possibile immettere con l'email e la password assegnata.</value>
   </data>
+  <data name="ErrorRegisterUser" xml:space="preserve">
+    <value>L'utente esiste già</value>
+  </data>
 </root>
