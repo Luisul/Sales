@@ -45,7 +45,7 @@
                 {
                     return new Response
                     {
-                        IsSuccess = false,
+                        IsSucces = false,
                         Message = "001. User already exists.",
                     };
                 }
@@ -76,7 +76,7 @@
 
                     return new Response
                     {
-                        IsSuccess = true,
+                        IsSucces = true,
                     };
                 }
 
@@ -88,7 +88,7 @@
 
                 return new Response
                 {
-                    IsSuccess = false,
+                    IsSucces = false,
                     Message = errors,
                 };
             }
@@ -97,7 +97,7 @@
 
                 return new Response
                 {
-                    IsSuccess = false,
+                    IsSucces = false,
                     Message = ex.Message,
                 };
             }
