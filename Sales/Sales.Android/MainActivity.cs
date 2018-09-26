@@ -10,9 +10,10 @@
 
     [Activity(
         Label = "Sales",
-        Icon = "@mipmap/icon",
+        Icon = "@drawable/ic_launch",
         Theme = "@style/MainTheme",
-        MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+        MainLauncher = false, 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
